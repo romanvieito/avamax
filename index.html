@@ -46,7 +46,7 @@ var myBackground;
 
 function startGame() {
     myBackground = new component(350, 600, "hospital.png", 0, 0, "background");
-    myGamePiece = new component(40, 40, "orange", 140, 420);
+    myGamePiece = new component(20, 20, "orange", 140, 420);
    
     myGamePiece.gravity = 0.05;
     myScore = new component("15px", "Consolas", "black", 10, 20, "text");
@@ -173,8 +173,8 @@ function updateGameArea() {
         maxGap = 140;
 
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(height, 30, "black", 0, 40));
-        myObstacles.push(new component(x - height - gap, 30, "black", height + gap, 40));
+        myObstacles.push(new component(height, 30, "black", 0, 20));
+        myObstacles.push(new component(x - height - gap, 30, "black", height + gap, 20));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].y += 1;
