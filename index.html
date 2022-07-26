@@ -38,12 +38,12 @@
     <div class="center">
         <script>
             var myGamePiece;
-var myObstacles = [];
-var myScore;
-var myBackground;
+            var myObstacles = [];
+            var myScore;
+            var myBackground;
+            var playing = false;
           
          
-
 function startGame() {
     myBackground = new component(350, 600, "hospital.png", 0, 0, "background");
     myGamePiece = new component(30, 30, "black", 140, 420);
@@ -62,6 +62,7 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         updateGameArea();
+        hideRecordAndRestartBtn();
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -105,6 +106,7 @@ function component(width, height, color, x, y, type) {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
+
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
         this.x += this.speedX + this.gravitySpeed;
@@ -121,7 +123,7 @@ function component(width, height, color, x, y, type) {
         }
     }
 
-     this.hitLeft = function() {
+    this.hitLeft = function() {
         var rockLeft = 0;
         if (this.x < rockLeft) {
             this.x = rockLeft;
@@ -138,6 +140,7 @@ function component(width, height, color, x, y, type) {
         var otherright = otherobj.x + (otherobj.width);
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
+        
         var crash = true;
         if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
             crash = false;
@@ -150,10 +153,14 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
+            playing = false;
+            checkScore();
+            showScore();
             return;
         } 
     }
     myGameArea.clear();
+    console.log();
 
     //myBackground.newPos();
     myBackground.update();
@@ -185,7 +192,6 @@ function updateGameArea() {
     myScore.update();
     myGamePiece.newPos();
     myGamePiece.update();
-
 }
 
 function everyinterval(n) {
@@ -194,21 +200,79 @@ function everyinterval(n) {
 }
 
 function accelerate(n) {
-    if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+    if (!myGameArea.interval) {
+        myGameArea.interval = setInterval(updateGameArea, 20);
+        playing = true;
+    }
     myGamePiece.gravity = n;
 }
 
+function checkScore() {
+    if (playing)
+        return;
+
+    if (!localStorage.Score){
+        localStorage.Score = 1;
+        return;
+    }
+
+    if (myGameArea.frameNo > Number(localStorage.Score)) {
+        localStorage.Score = Number(myGameArea.frameNo);
+    } 
+
+    document.getElementById("score").innerHTML = localStorage.Score;
+}
+
+function hideRecordAndRestartBtn() {
+    var idBtnRestart = document.getElementById("idBtnRestart");
+    var idScore = document.getElementById("idScore");
+    var idBtnPlay = document.getElementById("idBtnPlay");
+
+    idBtnRestart.style.display = "none";
+    idScore.style.display = "none";
+    idBtnPlay.style.display = "block";
+}
+
+function showRecordAndRestartBtn() {
+    var idBtnRestart = document.getElementById("idBtnRestart");
+    var idScore = document.getElementById("idScore");
+    var idBtnPlay = document.getElementById("idBtnPlay");
+
+    idBtnRestart.style.display = "block";
+    idScore.style.display = "block";
+    idBtnPlay.style.display = "none";
+}
+
+
+function showScore() {
+  if (playing) {
+    hideRecordAndRestartBtn();
+  } else {
+    showRecordAndRestartBtn();
+  }
+}
+
+function restart(){
+    myGameArea.clear();
+    startGame();
+}
+       
         </script>
-        <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(-0.02)"> < </button>
-
-        <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(0.02)"> > </button>
-
+        <div id="idBtnPlay">
+          <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(-0.02)"> < </button>
+           <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(0.02)"> > </button>
+         </div>
 
         <br><br>
-        <button class="btnRestart" onClick="window.location.reload();"> Restart </button>
 
+        <div id="idScore">
+            <p>Device Record: <label id="score"></label></p>
+        </div>
+
+        <div id="idBtnRestart">
+            <!-- <button class="btnRestart" onClick="restart()"> Restart </button> -->
+            <button class="btnRestart" onClick="window.location.reload();"> Restart </button>
+        </div>
     </div>
-
 </body>
-
 </html>
