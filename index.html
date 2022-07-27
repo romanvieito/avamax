@@ -9,12 +9,6 @@
             background-color: #f1f1f1;
         }
 
-        .center {
-            /*margin: auto;*/
-            width: 300px;
-
-        }
-
         .btn {
             width: 148px;
             height: 60px;
@@ -38,22 +32,59 @@
             height: 30px;
             font-weight: bold;
         }
+
+        .scoreLabel {
+            color: white;
+        }
+
+        header{
+            color: white;
+        }
+
+        body {
+            display: flex;  
+            flex-flow: row wrap;
+            font-weight: bold;
+            text-align: center; 
+            background-color:  #151719;
+            padding: 2em; 
+        }
+
+        body > * {
+            /*   padding: 10px; */
+            flex: 1 100%;
+        }
+
+        @media all and (min-width: 600px) {
+        .aside { flex: 1 0 0; }
+        }
+
+        @media all and (min-width: 800px) {
+        canva    { flex: 3 0px; }
+        .aside-1 { order: 1; } 
+        canva    { order: 2; }
+        .aside-2 { order: 3; }
+        .footer  { order: 4; }
+        }
       
     </style>
 </head>
 <body onload="startGame()">
-    <div id="idGamePlay" class="header center">
+    <header id="idGamePlay" class="header">
         <div class="flex">
-            <label class="title">A World</label><label id="runScore"></label>
+            <label class="title">Doctor World</label><label id="runScore"></label>
         </div>
-    </div>
-    <div class="footer">
+    </header>
+
+    <aside class="aside aside-1"></aside>
+    <aside class="aside aside-2"></aside>
+    <footer class="footer">
         <div id="idBtnPlay">
             <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(-0.02)"> < </button>
              <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(0.02)"> > </button>
         </div>
   
-        <div id="idScore">
+        <div id="idScore" class="scoreLabel">
             <p>Device Record: <label id="score"></label></p>
         </div>
 
@@ -61,7 +92,7 @@
             <!-- <button class="btnRestart" onClick="restart()"> Restart </button> -->
             <button class="btnRestart" onClick="window.location.reload();"> Restart </button>
         </div>
-        </div>
+    </footer>
 
 <script>
     var myGamePiece;
