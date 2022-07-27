@@ -46,7 +46,7 @@
             font-weight: bold;
             text-align: center; 
             background-color:  #151719;
-            padding: 2em; 
+            padding: 1em 2em; 
         }
 
         body > * {
@@ -54,8 +54,26 @@
             flex: 1 100%;
         }
 
+        @media all and (min-width: 400px) {
+        body{
+            flex-direction: column;
+            padding: 1em 3em;
+        }
+        }
+
+        @media all and (min-width: 500px) {
+        body{
+            padding: 1em 5em;
+        }
+        }
+
         @media all and (min-width: 600px) {
         .aside { flex: 1 0 0; }
+        
+        body{
+            padding: 1em 13em;
+        }
+
         }
 
         @media all and (min-width: 800px) {
@@ -64,6 +82,16 @@
         canva    { order: 2; }
         .aside-2 { order: 3; }
         .footer  { order: 4; }
+        body{
+            padding: 1em 15em;
+        }
+        }
+
+        @media all and (min-width: 1000px) {
+        body{
+            padding: 2em 34em;
+        }
+
         }
       
     </style>
