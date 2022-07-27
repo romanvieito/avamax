@@ -9,13 +9,18 @@
         }
 
         .btn {
-            width: 148px;
-            height: 60px;
+            width: 30%;
+            min-height: 60px;
+        }
+
+        .btnControls {
+            display: flex;
+            justify-content: center;
         }
 
         .btnRestart {
-            width: 100px;
-        
+            width: 30%;
+            min-height: 60px;
         }
 
         .disable-dbl-tap-zoom {
@@ -78,9 +83,9 @@
     <aside class="aside aside-1"></aside>
     <aside class="aside aside-2"></aside>
     <footer class="footer">
-        <div id="idBtnPlay">
+        <div id="idBtnPlay" class="btnControls">
             <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(-0.02)"> < </button>
-             <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(0.02)"> > </button>
+            <button class="btn disable-dbl-tap-zoom" onmousedown="accelerate(0.02)"> > </button>
         </div>
   
         <div id="idScore" class="scoreLabel">
